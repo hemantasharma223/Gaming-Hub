@@ -13,7 +13,7 @@
                     <ul class="list-unstyled">
                         <li><a href="/">Home</a></li>
                         <?php foreach ($categories as $category): ?>
-                        <li><a href="/category.php?id=<?= $category['category_id'] ?>"><?= $category['name'] ?></a></li>
+                        <li><a href="category.php?id=<?= $category['category_id'] ?>"><?= $category['name'] ?></a></li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
@@ -33,14 +33,14 @@
                     <h5>Contact Us</h5>
                     <address>
                         <p><i class="bi bi-geo-alt"></i> 123 Gaming Street, Kathmandu</p>
-                        <p><i class="bi bi-telephone"></i> +977 9841000000</p>
+                        <p><i class="bi bi-telephone"></i> +977 9869837027</p>
                         <p><i class="bi bi-envelope"></i> info@gaminghub.com</p>
                     </address>
                 </div>
             </div>
             <hr>
             <div class="text-center">
-                <p>&copy; <?= date('Y') ?> Gaming Hub. All rights reserved.</p>
+                <p>&copy; <?= date('Y') ?> kshitishbhurtel.com.np . All rights reserved.</p>
             </div>
         </div>
     </footer>
