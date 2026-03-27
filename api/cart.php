@@ -105,6 +105,18 @@ if ($action === 'getSessionCart') {
     exit();
 }
 
+// Return Cart Count (both session and DB)
+if ($action === 'get_count') {
+    if (!isLoggedIn()) {
+        $count = isset($_SESSION['sessioncart']) ? array_sum($_SESSION['sessioncart']) : 0;
+        echo json_encode(['success' => true, 'count' => $count]);
+    } else {
+        $count = executeQuery("SELECT SUM(quantity) FROM cart WHERE user_id = ?", [$userId])->fetchColumn() ?: 0;
+        echo json_encode(['success' => true, 'count' => $count]);
+    }
+    exit();
+}
+
 // Database cart operations (for logged-in users)
 if (!isLoggedIn()) {
     echo json_encode(['success' => false, 'message' => 'Please login to manage your cart.']);
@@ -206,10 +218,6 @@ switch ($action) {
         echo json_encode(['success' => true, 'items' => $cartItems, 'total' => $total]);
         break;
 
-    case 'get_count':
-        $count = executeQuery("SELECT COUNT(*) FROM cart WHERE user_id = ?", [$userId])->fetchColumn();
-        echo json_encode(['success' => true, 'count' => $count]);
-        break;
 
     default:
         echo json_encode(['success' => false, 'message' => 'Invalid action.']);

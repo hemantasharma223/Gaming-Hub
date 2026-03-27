@@ -7,97 +7,85 @@ if (isLoggedIn()) {
     exit();
 }
 
+$error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = sanitize($_POST['email']);
     $password = sanitize($_POST['password']);
 
-    $sql = "SELECT user_id, email, password,is_active FROM users WHERE email = ? ";
-    $stmt = executeQuery($sql, [$email]);
+    $stmt = executeQuery("SELECT user_id, email, password, is_active FROM users WHERE email = ?", [$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$user['is_active']) {
-        $error = "This account is deactive please contact admin .";
+    if ($user && !$user['is_active']) {
+        $error = "This account has been deactivated. Please contact admin.";
     } elseif ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['user_email'] = $user['email'];
 
-        // ✅ Insert/update sessioncart into cart table
         if (!empty($_SESSION['sessioncart'])) {
-            echo ` <script>$.ajax({
-        url: '/gaming_hub/api/cart.php',
-        method: 'POST',
-        data: {
-            action: 'add',
-            product_id: {$_SESSION['sessioncart']['']},
-            quantity: quantity
-        },
-        dataType: 'json',
-        success: function (response) {
-            if (response.success) {
-                $('.cart-count').text(response.cart_count);
-                showAlert('Product added to cart!', 'success');
-            } else {
-                showAlert(response.message, 'danger');
+            foreach ($_SESSION['sessioncart'] as $productId => $quantity) {
+                $cartItem = executeQuery("SELECT quantity FROM cart WHERE user_id = ? AND product_id = ?", [$user['user_id'], $productId])->fetch();
+                if ($cartItem) {
+                    executeQuery("UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?", [$cartItem['quantity'] + $quantity, $user['user_id'], $productId]);
+                } else {
+                    executeQuery("INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, ?)", [$user['user_id'], $productId, $quantity]);
+                }
             }
-        },
-        error: function () {
-            showAlert('Failed to add product to cart. Please try again.', 'danger');
-        }
-    });</script>`;
-
-            // Optional: Clear session cart after syncing
             unset($_SESSION['sessioncart']);
         }
 
-        // Redirect
         $redirect = $_SESSION['redirect_url'] ?? '/gaming_hub/';
         unset($_SESSION['redirect_url']);
         header("Location: $redirect");
         exit();
     } else {
-        $error = "Invalid email or password.";
+        $error = "Invalid email or password. Please try again.";
     }
 }
 
+$pageTitle = 'Login';
 require_once __DIR__ . '/../../includes/header.php';
 ?>
 
-<!-- === Login Form UI === -->
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Login</h4>
-                </div>
-                <div class="card-body">
-                    <?php if (isset($_SESSION['success_message'])): ?>
-                        <div class="alert alert-success">
-                            <p class="mb-0"><?= $_SESSION['success_message'] ?></p>
-                        </div>
-                        <?php unset($_SESSION['success_message']); ?>
-                    <?php endif; ?>
+<div class="d-flex align-items-center justify-content-center" style="min-height:80vh;padding:40px 16px">
+    <div style="width:100%;max-width:460px">
+        <div class="text-center mb-4">
+            <i class="bi bi-controller" style="font-size:3rem;color:var(--accent-light)"></i>
+            <h2 class="mt-2" style="font-family:'Rajdhani',sans-serif;font-size:2rem">Welcome Back</h2>
+            <p class="text-muted">Sign in to your Gaming Hub account</p>
+        </div>
 
-                    <?php if (isset($error)): ?>
-                        <div class="alert alert-danger">
-                            <p class="mb-0"><?= $error ?></p>
-                        </div>
-                    <?php endif; ?>
+        <div class="card">
+            <div class="card-body p-4">
+                <?php if (!empty($error)): ?>
+                <div class="alert alert-danger mb-3"><i class="bi bi-exclamation-triangle me-2"></i><?= $error ?></div>
+                <?php endif; ?>
+                <?php if (isset($_SESSION['success_message'])): ?>
+                <div class="alert alert-success mb-3"><i class="bi bi-check-circle me-2"></i><?= $_SESSION['success_message'] ?></div>
+                <?php unset($_SESSION['success_message']); endif; ?>
 
-                    <form method="POST">
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
-                    </form>
-                    <div class="mt-3 text-center">
-                        <p>Don't have an account? <a href="register.php">Register here</a></p>
                     </div>
+                    <div class="mb-4">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 btn-lg">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                    </button>
+                </form>
+
+                <hr class="glow-divider my-4">
+                <div class="text-center">
+                    <p class="text-muted mb-0">Don't have an account? <a href="register.php" style="color:var(--accent-light);font-weight:600">Create one</a></p>
                 </div>
             </div>
         </div>

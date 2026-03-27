@@ -8,16 +8,14 @@ if (!isLoggedIn()) {
 }
 
 $userId = $_SESSION['user_id'];
+$orders = executeQuery("SELECT * FROM orders WHERE user_id = ? ORDER BY order_date DESC", [$userId])->fetchAll(PDO::FETCH_ASSOC);
 
-// Get all orders for the user
-$orders = executeQuery("SELECT * FROM orders WHERE user_id = ? ORDER BY order_date DESC", [$userId])
-          ->fetchAll(PDO::FETCH_ASSOC);
-
+$pageTitle = 'My Orders';
 require_once '../includes/header.php';
 ?>
 
 <div class="container my-5">
-    <h1 class="mb-4">My Orders</h1>
+    <h1 class="section-title mb-4"><i class="bi bi-box-seam" style="color:var(--accent-light)"></i> My Orders</h1>
     
     <?php if (empty($orders)): ?>
         <div class="alert alert-info">

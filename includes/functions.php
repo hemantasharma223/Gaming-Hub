@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/recommendations.php';
 
 // Check if user is logged in
 function isLoggedIn() {
@@ -62,10 +63,13 @@ function getFeaturedProducts($limit = 8) {
 }
 
 // Get cart count for a user
-function getCartCount($userId) {
-    $sql = "SELECT COUNT(*) FROM cart WHERE user_id = ?";
+function getCartCount($userId = null) {
+    if (!$userId) {
+        return isset($_SESSION['sessioncart']) ? array_sum($_SESSION['sessioncart']) : 0;
+    }
+    $sql = "SELECT SUM(quantity) FROM cart WHERE user_id = ?";
     $stmt = executeQuery($sql, [$userId]);
-    return $stmt->fetchColumn();
+    return $stmt->fetchColumn() ?: 0;
 }
 
 // Get product by ID
