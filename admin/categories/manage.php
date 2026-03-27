@@ -18,9 +18,9 @@ require_once '../includes/admin_header.php';
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
-                <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                    <h6>Manage Categories</h6>
-                    <a href="add.php" class="btn btn-primary btn-sm">
+                <div class="card-header pb-0 d-flex justify-content-between align-items-center border-0 bg-transparent mt-2">
+                    <h5 class="mb-0 text-primary fw-bold"><i class="bi bi-tags me-2"></i>Manage Categories</h5>
+                    <a href="add.php" class="btn btn-cta btn-sm">
                         <i class="bi bi-plus-lg"></i> Add New Category
                     </a>
                 </div>
@@ -29,10 +29,10 @@ require_once '../includes/admin_header.php';
                         <table class="table align-items-center mb-0" id="categories-table">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Category</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Image</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+                                    <th>Category</th>
+                                    <th>Image</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,8 +41,8 @@ require_once '../includes/admin_header.php';
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm"><?= $category['name'] ?></h6>
-                                                <p class="text-xs text-secondary mb-0"><?= $category['slug'] ?></p>
+                                                <h6 class="mb-0 fw-bold"><?= $category['name'] ?></h6>
+                                                <p class="text-muted mb-0 small"><?= $category['slug'] ?></p>
                                             </div>
                                         </div>
                                     </td>
@@ -54,8 +54,8 @@ require_once '../includes/admin_header.php';
                                             <span class="text-xs text-secondary">No image</span>
                                         <?php endif; ?>
                                     </td>
-                                    <td class="align-middle text-center text-sm">
-                                        <span class="badge badge-sm <?= $category['is_active'] ? 'bg-gradient-success' : 'bg-gradient-secondary' ?>">
+                                    <td class="align-middle text-center">
+                                        <span class="badge <?= $category['is_active'] ? 'bg-success' : 'bg-secondary' ?>">
                                             <?= $category['is_active'] ? 'Active' : 'Inactive' ?>
                                         </span>
                                     </td>
@@ -81,6 +81,20 @@ require_once '../includes/admin_header.php';
         </div>
     </div>
 </div>
+
+<style>
+/* Optional fix for datatables dark mode integration if needed */
+.dataTables_wrapper .dataTables_filter input {
+    background-color: var(--dark-card2);
+    border: 1px solid var(--dark-border);
+    color: var(--text-primary);
+}
+.dataTables_wrapper .dataTables_length select {
+    background-color: var(--dark-card2);
+    border: 1px solid var(--dark-border);
+    color: var(--text-primary);
+}
+</style>
 
 <script>
 $(document).ready(function() {

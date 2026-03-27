@@ -22,9 +22,9 @@ require_once __DIR__ . '/../includes/admin_header.php';
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
-                <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                    <h6>Products Management</h6>
-                    <a href="add.php" class="btn btn-primary btn-sm">
+                <div class="card-header pb-0 d-flex justify-content-between align-items-center border-0 bg-transparent mt-2">
+                    <h5 class="mb-0 text-primary fw-bold"><i class="bi bi-controller me-2"></i>Products Management</h5>
+                    <a href="add.php" class="btn btn-cta btn-sm">
                         <i class="bi bi-plus-lg"></i> Add New Product
                     </a>
                 </div>
@@ -33,23 +33,12 @@ require_once __DIR__ . '/../includes/admin_header.php';
                         <table class="table align-items-center mb-0" id="products-table">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Product</th>
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Category</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Price</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Stock</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Status</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Actions</th>
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th class="text-center">Price</th>
+                                    <th class="text-center">Stock</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,43 +48,39 @@ require_once __DIR__ . '/../includes/admin_header.php';
                                             <div class="d-flex px-2 py-1">
                                                 <div>
                                                     <img src="../../assets/uploads/products/<?= $product['image'] ?>"
-                                                        class="me-3 img-fluid"
-                                                        style="max-width: 60px; height: 60px; object-fit: cover; alt="
-                                                        <?= $product['name'] ?>">
+                                                        class="me-3 img-fluid border-radius-lg"
+                                                        style="max-width: 60px; height: 60px; object-fit: cover;" alt="<?= $product['name'] ?>">
                                                 </div>
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm"><?= $product['name'] ?></h6>
-                                                    <p class="text-xs text-secondary mb-0">
+                                                    <h6 class="mb-0 fw-bold"><?= $product['name'] ?></h6>
+                                                    <p class="text-muted mb-0 small">
                                                         <?= substr($product['description'], 0, 50) ?>...
                                                     </p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0"><?= $product['category_name'] ?></p>
-                                            <p class="text-xs text-secondary mb-0"><?= $product['subcategory_name'] ?></p>
+                                            <p class="fw-bold mb-0 small"><?= $product['category_name'] ?></p>
+                                            <p class="text-muted mb-0 small"><?= $product['subcategory_name'] ?></p>
                                         </td>
-                                        <td class="align-middle text-center text-sm">
+                                        <td class="align-middle text-center">
                                             <?php if ($product['discount_price']): ?>
-                                                <span class="text-danger">Rs.
-                                                    <?= number_format($product['discount_price'], 2) ?></span>
-                                                <span class="text-decoration-line-through text-xs text-muted">Rs.
-                                                    <?= number_format($product['price'], 2) ?></span>
+                                                <span class="text-danger fw-bold">Rs. <?= number_format($product['discount_price'], 2) ?></span>
+                                                <br>
+                                                <span class="text-decoration-line-through text-muted small">Rs. <?= number_format($product['price'], 2) ?></span>
                                             <?php else: ?>
-                                                <span>Rs. <?= number_format($product['price'], 2) ?></span>
+                                                <span class="fw-bold">Rs. <?= number_format($product['price'], 2) ?></span>
                                             <?php endif; ?>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span
-                                                class="text-secondary text-xs font-weight-bold"><?= $product['stock'] ?></span>
+                                            <span class="fw-bold"><?= $product['stock'] ?></span>
                                         </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span
-                                                class="badge badge-sm <?= $product['is_active'] ? 'bg-success' : 'bg-secondary' ?>">
+                                        <td class="align-middle text-center">
+                                            <span class="badge <?= $product['is_active'] ? 'bg-success' : 'bg-secondary' ?> mb-1">
                                                 <?= $product['is_active'] ? 'Active' : 'Inactive' ?>
                                             </span>
-                                            <span
-                                                class="badge badge-sm <?= $product['is_featured'] ? 'bg-info' : 'bg-warning' ?>">
+                                            <br>
+                                            <span class="badge <?= $product['is_featured'] ? 'bg-info' : 'bg-warning' ?>">
                                                 <?= $product['is_featured'] ? 'Featured' : 'Regular' ?>
                                             </span>
                                         </td>

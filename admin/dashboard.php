@@ -36,66 +36,59 @@ require_once __DIR__ . '/includes/admin_header.php';
 ?>
 
 <div class="container-fluid mt-4">
-    <div class="row">
+    <div class="row g-4 mb-5">
         <div class="col-md-3">
-            <div class="card bg-primary text-white mb-4">
-                <div class="card-body">
-                    <h5 class="card-title">Products</h5>
-                    <h2><?= $stats['total_products'] ?></h2>
-                </div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="products/manage.php">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            <div class="stat-card">
+                <div class="stat-icon text-primary"><i class="bi bi-controller"></i></div>
+                <div class="stat-value"><?= $stats['total_products'] ?></div>
+                <div class="stat-label">Total Products</div>
+                <div class="mt-3">
+                    <a class="btn btn-outline-primary btn-sm rounded-pill px-3" href="products/manage.php">View Details</a>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card bg-success text-white mb-4">
-                <div class="card-body">
-                    <h5 class="card-title">Categories</h5>
-                    <h2><?= $stats['total_categories'] ?></h2>
-                </div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="categories/manage.php">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            <div class="stat-card">
+                <div class="stat-icon text-success"><i class="bi bi-tags"></i></div>
+                <div class="stat-value"><?= $stats['total_categories'] ?></div>
+                <div class="stat-label">Categories</div>
+                <div class="mt-3">
+                    <a class="btn btn-outline-success btn-sm rounded-pill px-3" href="categories/manage.php">View Details</a>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card bg-warning text-white mb-4">
-                <div class="card-body">
-                    <h5 class="card-title">Users</h5>
-                    <h2><?= $stats['total_users'] ?></h2>
-                </div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="users/manage.php">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            <div class="stat-card">
+                <div class="stat-icon text-warning"><i class="bi bi-people"></i></div>
+                <div class="stat-value"><?= $stats['total_users'] ?></div>
+                <div class="stat-label">Active Users</div>
+                <div class="mt-3">
+                    <a class="btn btn-outline-warning btn-sm rounded-pill px-3" href="users/manage.php">View Details</a>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card bg-danger text-white mb-4">
-                <div class="card-body">
-                    <h5 class="card-title">Revenue</h5>
-                    <h2>Rs. <?= number_format($stats['revenue'], 2) ?></h2>
-                </div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="orders/all.php">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            <div class="stat-card border-info">
+                <div class="stat-icon text-info"><i class="bi bi-cash"></i></div>
+                <div class="stat-value">Rs. <?= number_format($stats['revenue'], 2) ?></div>
+                <div class="stat-label">Total Revenue</div>
+                <div class="mt-3">
+                    <a class="btn btn-outline-info btn-sm rounded-pill px-3" href="orders/all.php">View Details</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5>Recent Orders</h5>
+    <div class="row g-4">
+        <div class="col-md-7">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 text-primary fw-bold"><i class="bi bi-clock-history me-2"></i>Recent Orders</h5>
+                    <a href="orders/all.php" class="btn btn-sm btn-outline-secondary">View All</a>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-striped">
+                        <table class="table table-hover mb-0">
                             <thead>
                                 <tr>
                                     <th>Order ID</th>
@@ -129,33 +122,25 @@ require_once __DIR__ . '/includes/admin_header.php';
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card mb-4">
+        <div class="col-md-5">
+            <div class="card h-100">
                 <div class="card-header">
-                    <h5>Quick Actions</h5>
+                    <h5 class="mb-0 text-info fw-bold"><i class="bi bi-lightning-charge me-2"></i>Quick Actions</h5>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <a href="categories/manage.php" class="btn btn-outline-primary w-100">
-                                <i class="bi bi-tags-fill"></i> Manage Categories
-                            </a>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <a href="products/add.php" class="btn btn-outline-success w-100">
-                                <i class="bi bi-plus-circle-fill"></i> Add New Product
-                            </a>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <a href="orders/pending.php" class="btn btn-outline-warning w-100">
-                                <i class="bi bi-cart-check-fill"></i> Pending Orders
-                            </a>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <a href="users/manage.php" class="btn btn-outline-info w-100">
-                                <i class="bi bi-people-fill"></i> Manage Users
-                            </a>
-                        </div>
+                <div class="card-body p-4">
+                    <div class="d-grid gap-3">
+                        <a href="categories/manage.php" class="btn btn-outline-primary text-start py-3 fs-5 rounded-3">
+                            <i class="bi bi-tags ms-2 me-3 fs-4"></i> Manage Categories
+                        </a>
+                        <a href="products/add.php" class="btn btn-outline-success text-start py-3 fs-5 rounded-3">
+                            <i class="bi bi-plus-circle ms-2 me-3 fs-4"></i> Add New Product
+                        </a>
+                        <a href="orders/pending.php" class="btn btn-outline-warning text-start py-3 fs-5 rounded-3">
+                            <i class="bi bi-cart-check ms-2 me-3 fs-4"></i> Pending Orders
+                        </a>
+                        <a href="users/manage.php" class="btn btn-outline-info text-start py-3 fs-5 rounded-3">
+                            <i class="bi bi-people ms-2 me-3 fs-4"></i> Manage Users
+                        </a>
                     </div>
                 </div>
             </div>

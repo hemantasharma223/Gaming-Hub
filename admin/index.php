@@ -48,30 +48,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Gaming Hub - Admin Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts for Modern Theme -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Premium Design System -->
+    <link rel="stylesheet" href="/gaming_hub/assets/css/style.css">
+    
+    <!-- Theme initialization -->
+    <script>
+        const savedTheme = localStorage.getItem('gh_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
     <style>
-        body {
-            background-color: #f8f9fa;
-        }
         .login-container {
-            max-width: 400px;
-            margin-top: 100px;
-        }
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .card-header {
-            border-radius: 10px 10px 0 0 !important;
+            max-width: 420px;
+            margin-top: 10vh;
         }
     </style>
 </head>
-<body>
+<body class="d-flex align-items-center min-vh-100">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 login-container">
-                <div class="card">
-                    <div class="card-header bg-dark text-white text-center">
-                        <h3><i class="bi bi-joystick"></i> Gaming Hub Admin</h3>
+                <div class="card p-2">
+                    <div class="card-header border-0 text-center bg-transparent mt-3">
+                        <h2 class="section-title-center mb-0"><span><i class="bi bi-joystick"></i> Admin Panel</span></h2>
                     </div>
                     <div class="card-body p-4">
                         <?php if (isset($error)): ?>
@@ -81,15 +83,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endif; ?>
                         
                         <form method="POST">
-                            <div class="mb-3">
+                            <div class="mb-4">
                                 <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" required>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-transparent border-end-0"><i class="bi bi-person text-muted"></i></span>
+                                    <input type="text" class="form-control border-start-0 ps-0" id="username" name="username" placeholder="Enter your username" required>
+                                </div>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-4">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-transparent border-end-0"><i class="bi bi-lock text-muted"></i></span>
+                                    <input type="password" class="form-control border-start-0 ps-0" id="password" name="password" placeholder="Enter your password" required>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-dark w-100">Login</button>
+                            <button type="submit" class="btn btn-cta w-100 mt-2">LOGIN TO DASHBOARD</button>
                         </form>
                     </div>
                 </div>

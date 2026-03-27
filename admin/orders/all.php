@@ -21,10 +21,10 @@ require_once __DIR__ . '/../includes/admin_header.php';
     <div class="row">
         <div class="col-12">
             <div class="card mb-4">
-                <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                    <h6>All Orders</h6>
+                <div class="card-header pb-0 d-flex justify-content-between align-items-center border-0 bg-transparent mt-2">
+                    <h5 class="mb-0 text-primary fw-bold"><i class="bi bi-clock-history me-2"></i>All Orders</h5>
                     <div>
-                        <a href="pending.php" class="btn btn-sm btn-outline-primary me-2">
+                        <a href="pending.php" class="btn btn-sm btn-outline-warning me-2">
                             <i class="bi bi-hourglass-split"></i> View Pending Orders
                         </a>
                     </div>
@@ -34,23 +34,12 @@ require_once __DIR__ . '/../includes/admin_header.php';
                         <table class="table align-items-center mb-0" id="orders-table">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Order</th>
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Customer</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Date</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Amount</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Status</th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Actions</th>
+                                    <th>Order</th>
+                                    <th>Customer</th>
+                                    <th class="text-center">Date</th>
+                                    <th class="text-center">Amount</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,8 +48,8 @@ require_once __DIR__ . '/../includes/admin_header.php';
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">Order #<?= $order['order_id'] ?></h6>
-                                                    <p class="text-xs text-secondary mb-0">
+                                                    <h6 class="mb-0 fw-bold">Order #<?= $order['order_id'] ?></h6>
+                                                    <p class="text-muted small mb-0">
                                                         <?php
                                                         $itemCount = executeQuery(
                                                             "SELECT COUNT(*) FROM order_items WHERE order_id = ?",
@@ -73,29 +62,29 @@ require_once __DIR__ . '/../includes/admin_header.php';
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0"><?= $order['full_name'] ?></p>
-                                            <p class="text-xs text-secondary mb-0"><?= $order['email'] ?></p>
+                                            <p class="fw-bold mb-0 small"><?= $order['full_name'] ?></p>
+                                            <p class="text-muted small mb-0"><?= $order['email'] ?></p>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">
+                                            <span class="small fw-bold">
                                                 <?= date('M d, Y', strtotime($order['order_date'])) ?>
                                             </span>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">
+                                            <span class="small fw-bold text-success">
                                                 Rs. <?= number_format($order['total_amount'], 2) ?>
                                             </span>
                                         </td>
-                                        <td class="align-middle text-center text-sm">
+                                        <td class="align-middle text-center">
                                             <span class="badge 
                                             <?= $order['status'] == 'pending' ? 'bg-warning' :
-                                                ($order['status'] == 'processing' ? 'bg-info' :
+                                                ($order['status'] == 'processing' ? 'bg-info text-dark' :
                                                     ($order['status'] == 'shipped' ? 'bg-primary' :
                                                         ($order['status'] == 'delivered' ? 'bg-success' : 'bg-danger'))) ?>">
                                                 <?= ucfirst($order['status']) ?>
                                             </span>
                                             <?php if ($order['status'] == 'delivered'): ?>
-                                                <p class="text-xs text-muted mb-0">
+                                                <p class="text-muted small mb-0 mt-1">
                                                     <?= date('M d, Y', strtotime($order['response_date'])) ?>
                                                 </p>
                                             <?php endif; ?>
