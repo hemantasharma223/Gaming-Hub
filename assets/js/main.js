@@ -75,6 +75,19 @@ $(document).ready(function () {
         }
     });
 
+    $(document).on('change', '.quantity', function () {
+        let currentVal = parseInt($(this).val());
+        let maxVal = parseInt($(this).attr('max'));
+        let minVal = parseInt($(this).attr('min')) || 1;
+        
+        if (isNaN(currentVal) || currentVal < minVal) {
+            $(this).val(minVal);
+        } else if (!isNaN(maxVal) && currentVal > maxVal) {
+            showAlert('Cannot exceed available stock', 'warning');
+            $(this).val(maxVal);
+        }
+    });
+
     // Update cart count on page load
     updateCartCount();
 });

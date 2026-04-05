@@ -91,23 +91,25 @@ require_once 'includes/header.php';
 
             <!-- Quantity -->
             <?php if ($product['stock'] > 0): ?>
-            <div class="mb-4">
-                <label class="form-label">Quantity</label>
-                <div class="input-group" style="max-width:160px">
-                    <button class="btn btn-outline-secondary decrement" type="button">−</button>
-                    <input type="number" class="form-control text-center quantity" value="1" min="1" max="<?= $product['stock'] ?>">
-                    <button class="btn btn-outline-secondary increment" type="button">+</button>
+            <div class="product-actions">
+                <div class="mb-4">
+                    <label class="form-label">Quantity</label>
+                    <div class="input-group" style="max-width:160px">
+                        <button class="btn btn-outline-secondary decrement" type="button">−</button>
+                        <input type="number" class="form-control text-center quantity" value="1" min="1" max="<?= $product['stock'] ?>">
+                        <button class="btn btn-outline-secondary increment" type="button">+</button>
+                    </div>
                 </div>
-            </div>
 
-            <!-- CTA Buttons -->
-            <div class="d-flex gap-3 flex-wrap">
-                <button class="btn btn-primary px-5 add-to-cart" data-id="<?= $product['product_id'] ?>">
-                    <i class="bi bi-bag-plus me-2"></i>Add to Cart
-                </button>
-                <a href="user/cart.php" class="btn btn-outline-primary px-4">
-                    <i class="bi bi-bag-heart me-2"></i>View Cart
-                </a>
+                <!-- CTA Buttons -->
+                <div class="d-flex gap-3 flex-wrap mb-4">
+                    <button class="btn btn-primary px-5 add-to-cart" data-id="<?= $product['product_id'] ?>">
+                        <i class="bi bi-bag-plus me-2"></i>Add to Cart
+                    </button>
+                    <a href="user/cart.php" class="btn btn-outline-primary px-4">
+                        <i class="bi bi-bag-heart me-2"></i>View Cart
+                    </a>
+                </div>
             </div>
             <?php endif; ?>
 

@@ -20,7 +20,7 @@ function getSessionCartData()
     $productIds = array_keys($_SESSION['sessioncart']);
     $placeholders = implode(',', array_fill(0, count($productIds), '?'));
 
-    $products = executeQuery("SELECT product_id, name, price, discount_price, image FROM products WHERE product_id IN ($placeholders)", $productIds)->fetchAll(PDO::FETCH_ASSOC);
+    $products = executeQuery("SELECT product_id, name, price, discount_price, image, stock FROM products WHERE product_id IN ($placeholders)", $productIds)->fetchAll(PDO::FETCH_ASSOC);
 
     $cartItems = [];
     $total = 0;
@@ -40,7 +40,8 @@ function getSessionCartData()
                 'discount_price' => $product['discount_price'] ? floatval($product['discount_price']) : null,
                 'image' => $product['image'],
                 'quantity' => $qty,
-                'subtotal' => $subtotal
+                'subtotal' => $subtotal,
+                'stock' => (int)$product['stock']
             ];
 
             $total += $subtotal;
@@ -201,7 +202,7 @@ switch ($action) {
         break;
 
     case 'get':
-        $cartItems = executeQuery("SELECT c.*, p.name, p.price, p.discount_price, p.image 
+        $cartItems = executeQuery("SELECT c.*, p.name, p.price, p.discount_price, p.image, p.stock 
                           FROM cart c
                           JOIN products p ON c.product_id = p.product_id
                           WHERE c.user_id = ?", [$userId])->fetchAll(PDO::FETCH_ASSOC);

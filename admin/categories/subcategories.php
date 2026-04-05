@@ -37,10 +37,10 @@ require_once '../includes/admin_header.php';
                 <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                     <h6>Subcategories for <?= $category['name'] ?></h6>
                     <div>
-                        <a href="manage.php" class="btn btn-sm btn-outline-secondary me-2">
+                        <a href="manage.php" class="btn btn-sm btn-outline-info me-2">
                             <i class="bi bi-arrow-left"></i> Back to Categories
                         </a>
-                        <a href="add_subcategory.php?id=<?= $categoryId ?>" class="btn btn-primary btn-sm">
+                        <a href="add_subcategory.php?id=<?= $categoryId ?>" class="btn btn-cta btn-sm">
                             <i class="bi bi-plus-lg"></i> Add Subcategory
                         </a>
                     </div>
@@ -50,10 +50,10 @@ require_once '../includes/admin_header.php';
                         <table class="table align-items-center mb-0" id="subcategories-table">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Subcategory</th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Slug</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+                                    <th>Subcategory</th>
+                                    <th>Slug</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,17 +62,20 @@ require_once '../includes/admin_header.php';
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm"><?= $subcategory['name'] ?></h6>
+                                                <h6 class="mb-0 fw-bold"><?= $subcategory['name'] ?></h6>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
-                                        <p class="text-xs font-weight-bold mb-0"><?= $subcategory['slug'] ?></p>
+                                    <td class="align-middle">
+                                        <p class="text-muted small mb-0"><?= $subcategory['slug'] ?></p>
                                     </td>
-                                    <td class="align-middle text-center text-sm">
-                                        <span class="badge badge-sm <?= $subcategory['is_active'] ? 'bg-gradient-success' : 'bg-gradient-secondary' ?>">
-                                            <?= $subcategory['is_active'] ? 'Active' : 'Inactive' ?>
-                                        </span>
+                                    <td class="align-middle text-center">
+                                        <div class="form-check form-switch d-flex justify-content-center mb-0">
+                                            <input class="form-check-input toggle-subcategory-status" type="checkbox" role="switch" 
+                                                   data-id="<?= $subcategory['subcategory_id'] ?>" 
+                                                   <?= $subcategory['is_active'] ? 'checked' : '' ?>
+                                                   title="Toggle active status">
+                                        </div>
                                     </td>
                                     <td class="align-middle text-center">
                                         <a href="edit_subcategory.php?id=<?= $subcategory['subcategory_id'] ?>" class="btn btn-sm btn-outline-info mb-0">
@@ -94,22 +97,71 @@ require_once '../includes/admin_header.php';
     </div>
 </div>
 
+<style>
+/* Fix DataTables styling for dark mode */
+[data-theme="dark"] table.dataTable tbody tr {
+    background-color: transparent !important;
+}
+[data-theme="dark"] table.dataTable tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+}
+[data-theme="dark"] table.dataTable tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+[data-theme="dark"] .dataTables_wrapper .dataTables_filter input,
+[data-theme="dark"] .dataTables_wrapper .dataTables_length select {
+    background-color: var(--dark-card2);
+    border: 1px solid var(--dark-border);
+    color: var(--text-light);
+}
+</style>
+
+<?php require_once '../includes/admin_footer.php'; ?>
+
 <script>
 $(document).ready(function() {
     // Initialize DataTable
     $('#subcategories-table').DataTable({
         responsive: true,
         columnDefs: [
-            { orderable: false, targets: [3] }
+            { orderable: false, targets: [2, 3] }
         ]
     });
     
+    // Toggle subcategory status
+    $(document).on('change', '.toggle-subcategory-status', function() {
+        const subcategoryId = $(this).data('id');
+        const status = $(this).is(':checked') ? 1 : 0;
+        const toggleCheckbox = $(this);
+        
+        $.ajax({
+            url: '../../api/admin.php',
+            method: 'POST',
+            data: { 
+                action: 'toggle_subcategory_status', 
+                subcategory_id: subcategoryId,
+                status: status
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (!response.success) {
+                    alert(response.message || 'Failed to update subcategory status.');
+                    toggleCheckbox.prop('checked', !status);
+                }
+            },
+            error: function() {
+                alert('Network error. Failed to update subcategory status.');
+                toggleCheckbox.prop('checked', !status);
+            }
+        });
+    });
+    
     // Delete subcategory
-    $('.delete-subcategory').click(function() {
+    $(document).on('click', '.delete-subcategory', function() {
         const subcategoryId = $(this).data('id');
         if (confirm('Are you sure you want to delete this subcategory? All products in this subcategory will also be deleted.')) {
             $.ajax({
-                url: '/api/admin.php',
+                url: '../../api/admin.php',
                 method: 'POST',
                 data: { action: 'delete_subcategory', subcategory_id: subcategoryId },
                 dataType: 'json',
@@ -125,5 +177,3 @@ $(document).ready(function() {
     });
 });
 </script>
-
-<?php require_once '../includes/admin_footer.php'; ?>

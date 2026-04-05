@@ -26,6 +26,32 @@ switch ($action) {
         }
         break;
 
+    case 'toggle_category_status':
+        $categoryId = (int) $_POST['category_id'];
+        $newStatus = ($_POST['status'] == 1) ? 1 : 0;
+
+        $result = executeQuery("UPDATE main_categories SET is_active = ? WHERE category_id = ?", [$newStatus, $categoryId]);
+
+        if ($result && $result->rowCount() > 0) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Update failed or no change.']);
+        }
+        break;
+
+    case 'toggle_subcategory_status':
+        $subcategoryId = (int) $_POST['subcategory_id'];
+        $newStatus = ($_POST['status'] == 1) ? 1 : 0;
+
+        $result = executeQuery("UPDATE subcategories SET is_active = ? WHERE subcategory_id = ?", [$newStatus, $subcategoryId]);
+
+        if ($result && $result->rowCount() > 0) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Update failed or no change.']);
+        }
+        break;
+
     case 'delete_product':
         $productId = (int) $_POST['product_id'];
         $product = executeQuery("SELECT image FROM products WHERE product_id = ?", [$productId])->fetch();
@@ -63,10 +89,15 @@ switch ($action) {
 
     case 'delete_category':
         $categoryId = (int) $_POST['category_id'];
-        $category = executeQuery("SELECT image FROM main_categories WHERE category_id = ?", [$categoryId])->fetch();
+        $category = executeQuery("SELECT image, is_active FROM main_categories WHERE category_id = ?", [$categoryId])->fetch();
 
         if (!$category) {
             echo json_encode(['success' => false, 'message' => 'Category not found.']);
+            exit();
+        }
+
+        if ($category['is_active']) {
+            echo json_encode(['success' => false, 'message' => 'Cannot delete an active category. Please deactivate it first.']);
             exit();
         }
 

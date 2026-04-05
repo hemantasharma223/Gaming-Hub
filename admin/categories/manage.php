@@ -55,9 +55,12 @@ require_once '../includes/admin_header.php';
                                         <?php endif; ?>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="badge <?= $category['is_active'] ? 'bg-success' : 'bg-secondary' ?>">
-                                            <?= $category['is_active'] ? 'Active' : 'Inactive' ?>
-                                        </span>
+                                        <div class="form-check form-switch d-flex justify-content-center mb-0">
+                                            <input class="form-check-input toggle-category-status" type="checkbox" role="switch" 
+                                                   data-id="<?= $category['category_id'] ?>" 
+                                                   <?= $category['is_active'] ? 'checked' : '' ?>
+                                                   title="Toggle active status">
+                                        </div>
                                     </td>
                                     <td class="align-middle text-center">
                                         <a href="edit.php?id=<?= $category['category_id'] ?>" class="btn btn-sm btn-outline-info mb-0">
@@ -82,6 +85,8 @@ require_once '../includes/admin_header.php';
     </div>
 </div>
 
+<?php require_once __DIR__ . '/../includes/admin_footer.php'; ?>
+
 <style>
 /* Optional fix for datatables dark mode integration if needed */
 .dataTables_wrapper .dataTables_filter input {
@@ -102,16 +107,52 @@ $(document).ready(function() {
     $('#categories-table').DataTable({
         responsive: true,
         columnDefs: [
-            { orderable: false, targets: [3] }
+            { orderable: false, targets: [1, 2, 3] }
         ]
     });
     
-    // Delete category
-    $('.delete-category').click(function() {
+    // Toggle category status
+    $(document).on('change', '.toggle-category-status', function() {
         const categoryId = $(this).data('id');
+        const status = $(this).is(':checked') ? 1 : 0;
+        const toggleCheckbox = $(this);
+        
+        $.ajax({
+            url: '../../api/admin.php',
+            method: 'POST',
+            data: { 
+                action: 'toggle_category_status', 
+                category_id: categoryId,
+                status: status
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (!response.success) {
+                    alert(response.message || 'Failed to update category status.');
+                    // Revert the toggle on failure
+                    toggleCheckbox.prop('checked', !status);
+                }
+            },
+            error: function() {
+                alert('Network error. Failed to update category status.');
+                toggleCheckbox.prop('checked', !status);
+            }
+        });
+    });
+    
+    // Delete category
+    $(document).on('click', '.delete-category', function() {
+        const categoryId = $(this).data('id');
+        const isActive = $(this).closest('tr').find('.toggle-category-status').is(':checked');
+        
+        if (isActive) {
+            alert('Cannot delete an active category. Please deactivate it first.');
+            return;
+        }
+
         if (confirm('Are you sure you want to delete this category? All subcategories and products will also be deleted.')) {
             $.ajax({
-                url: '/api/admin.php',
+                url: '../../api/admin.php',
                 method: 'POST',
                 data: { action: 'delete_category', category_id: categoryId },
                 dataType: 'json',
@@ -127,5 +168,3 @@ $(document).ready(function() {
     });
 });
 </script>
-
-<?php require_once __DIR__ . '/../includes/admin_footer.php'; ?>
