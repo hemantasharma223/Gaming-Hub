@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2026 at 01:17 PM
+-- Generation Time: Apr 05, 2026 at 08:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -255,7 +255,8 @@ INSERT INTO `users` (`user_id`, `email`, `password`, `full_name`, `phone`, `addr
 (2, 'kshitishbhurtel@tuicms.edu.np', '$2y$10$ydnjyb5D1whCyojX4H2j2uMvuZOcXFQRLiYtd/KKtYB6jP2iaMT4K', 'Kshitish Bhurtel', NULL, NULL, 1, '2025-06-22 08:08:03', '2025-06-26 16:54:45'),
 (3, 'dipeshkarki758@gmail.com', '$2y$10$jaxxwIDqqTD02DqHUZ.2c.QZtvi98W5GgeyQfqI/jfLFOnV8eo6lW', 'Dipesh Karki', NULL, NULL, 0, '2025-06-26 18:24:04', '2025-06-27 02:26:45'),
 (4, 'karki@gmail.com', '$2y$10$2PAKOrrASVidA.bYtadRauxVYVxgixoO3IuwQUBx2Uqmg10fPkbPy', 'Karki', NULL, NULL, 1, '2025-06-27 02:43:35', '2025-06-27 02:43:35'),
-(5, 'sagarkarki@tuicms.edu.np', '$2y$10$aOGZ7IP52g4Za5GOc68Dyua6zjQ/g9Ywxa/sPtC37uWTm.UxAeVee', 'Sagar Karki', NULL, NULL, 1, '2026-03-27 11:59:20', '2026-03-27 11:59:20');
+(5, 'sagarkarki@tuicms.edu.np', '$2y$10$aOGZ7IP52g4Za5GOc68Dyua6zjQ/g9Ywxa/sPtC37uWTm.UxAeVee', 'Sagar Karki', NULL, NULL, 1, '2026-03-27 11:59:20', '2026-03-27 11:59:20'),
+(6, 'tester@test.com', '$2y$10$BJbb9/U2bGXuAsGVcTFsTug5pmlEmHI7RfULIx17h57e0SITYHf2W', 'Tester', NULL, NULL, 1, '2026-04-05 17:46:07', '2026-04-05 17:46:07');
 
 -- --------------------------------------------------------
 
@@ -284,7 +285,68 @@ INSERT INTO `user_activity` (`activity_id`, `user_id`, `product_id`, `action_typ
 (6, 1, 10, 'view', '2026-03-27 11:57:47'),
 (7, 5, 29, 'view', '2026-03-27 12:07:42'),
 (8, 5, 10, 'view', '2026-03-27 12:15:24'),
-(9, 5, 10, 'cart', '2026-03-27 12:15:44');
+(9, 5, 10, 'cart', '2026-03-27 12:15:44'),
+(10, NULL, 22, 'view', '2026-04-01 12:42:54'),
+(11, NULL, 22, 'view', '2026-04-01 12:43:12'),
+(12, NULL, 22, 'cart', '2026-04-01 12:43:26'),
+(13, NULL, 22, 'view', '2026-04-01 12:43:59'),
+(14, NULL, 22, 'cart', '2026-04-01 12:44:08'),
+(15, NULL, 22, 'cart', '2026-04-01 12:44:08'),
+(16, NULL, 22, 'cart', '2026-04-01 12:44:08'),
+(17, NULL, 22, 'cart', '2026-04-01 12:44:08'),
+(18, NULL, 22, 'cart', '2026-04-01 12:44:08'),
+(19, NULL, 22, 'cart', '2026-04-01 12:44:08'),
+(20, NULL, 22, 'cart', '2026-04-01 12:44:08'),
+(21, NULL, 22, 'cart', '2026-04-01 12:44:08'),
+(22, NULL, 22, 'cart', '2026-04-01 12:44:08'),
+(23, NULL, 22, 'cart', '2026-04-01 12:44:08'),
+(24, NULL, 22, 'view', '2026-04-05 16:04:44'),
+(25, NULL, 22, 'cart', '2026-04-05 16:04:52'),
+(26, NULL, 22, 'view', '2026-04-05 16:05:00'),
+(27, NULL, 10, 'view', '2026-04-05 17:09:47'),
+(28, NULL, 10, 'cart', '2026-04-05 17:10:02'),
+(29, NULL, 22, 'view', '2026-04-05 17:10:45'),
+(30, NULL, 22, 'cart', '2026-04-05 17:10:51'),
+(31, NULL, 22, 'view', '2026-04-05 17:11:15'),
+(32, NULL, 22, 'cart', '2026-04-05 17:11:25'),
+(33, NULL, 22, 'view', '2026-04-05 17:20:34'),
+(34, NULL, 22, 'cart', '2026-04-05 17:20:40'),
+(35, NULL, 4, 'view', '2026-04-05 17:23:35'),
+(36, NULL, 4, 'view', '2026-04-05 17:24:43'),
+(37, NULL, 4, 'view', '2026-04-05 17:25:02'),
+(38, NULL, 4, 'cart', '2026-04-05 17:25:15'),
+(39, NULL, 4, 'view', '2026-04-05 17:25:50'),
+(40, NULL, 4, 'cart', '2026-04-05 17:26:04'),
+(41, NULL, 4, 'view', '2026-04-05 17:26:38'),
+(42, NULL, 4, 'view', '2026-04-05 17:28:38'),
+(43, NULL, 4, 'view', '2026-04-05 17:29:56'),
+(44, NULL, 4, 'view', '2026-04-05 17:32:28'),
+(45, NULL, 4, 'view', '2026-04-05 17:32:53'),
+(46, NULL, 4, 'view', '2026-04-05 17:33:31'),
+(47, NULL, 4, 'cart', '2026-04-05 17:33:46'),
+(48, NULL, 4, 'view', '2026-04-05 17:34:16'),
+(49, NULL, 4, 'cart', '2026-04-05 17:34:30'),
+(50, NULL, 4, 'view', '2026-04-05 17:35:00'),
+(51, NULL, 4, 'view', '2026-04-05 17:37:37'),
+(52, NULL, 4, 'cart', '2026-04-05 17:37:49'),
+(53, NULL, 22, 'view', '2026-04-05 17:41:02'),
+(54, NULL, 22, 'cart', '2026-04-05 17:41:13'),
+(55, NULL, 4, 'view', '2026-04-05 17:41:36'),
+(56, NULL, 4, 'view', '2026-04-05 17:48:31'),
+(57, NULL, 4, 'view', '2026-04-05 17:53:05'),
+(58, NULL, 4, 'cart', '2026-04-05 17:54:40'),
+(59, NULL, 4, 'view', '2026-04-05 17:55:39'),
+(60, NULL, 4, 'view', '2026-04-05 17:56:34'),
+(61, NULL, 4, 'cart', '2026-04-05 17:57:03'),
+(62, NULL, 22, 'view', '2026-04-05 17:59:24'),
+(63, NULL, 22, 'view', '2026-04-05 17:59:32'),
+(64, NULL, 22, 'view', '2026-04-05 17:59:44'),
+(65, NULL, 22, 'cart', '2026-04-05 17:59:48'),
+(66, NULL, 4, 'view', '2026-04-05 18:01:56'),
+(67, NULL, 4, 'view', '2026-04-05 18:03:35'),
+(68, NULL, 4, 'view', '2026-04-05 18:04:01'),
+(69, NULL, 22, 'view', '2026-04-05 18:04:13'),
+(70, NULL, 22, 'cart', '2026-04-05 18:04:32');
 
 --
 -- Indexes for dumped tables
@@ -377,7 +439,7 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT for table `main_categories`
 --
 ALTER TABLE `main_categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -401,19 +463,19 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `subcategories`
 --
 ALTER TABLE `subcategories`
-  MODIFY `subcategory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `subcategory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user_activity`
 --
 ALTER TABLE `user_activity`
-  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `activity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- Constraints for dumped tables
